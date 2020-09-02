@@ -1,0 +1,25 @@
+<!--
+-->
+
+<launch>
+	
+	<arg name="debug"   default="screen"/>
+
+	<include file="$(find mad_camera)/launch/usb_cam.launch" />
+	
+	<node pkg="mad_camera" type="camera_module.py" name="camera_node" output="$(arg debug)" >
+		<param name="cmd_tp" value="camm_command"/>
+		<param name="feedback_tp" value="feedback"/>
+		<param name="image_tp" value="/usb_cam/image_raw"/>
+	</node>
+
+	<node pkg="mad_camera" type="capture_module.py" name="capture_node" output="$(arg debug)" >
+		<param name="cmd_tp" value="capm_command"/>
+		<param name="cmdcm_tp" value="camm_command"/>
+		<param name="camm_feedback_tp" value="camm_feedback"/>
+		<param name="motcm_tp" value="motm_command"/>
+		<param name="motm_feedback_tp" value="mavros/mission/reached"/>
+	</node>	
+	
+
+</launch>

@@ -1,0 +1,18 @@
+<!-- -->
+<launch>
+
+	<include file="$(find rplidar_ros)/launch/rplidar.launch">
+	</include>
+
+	<!--include file="$(find hector_mapping)/launch/mapping_default.launch">
+	</include-->
+
+	<include file="$(find mavros)/launch/px4.launch">
+	</include>
+
+	<!--include file="$(find imu_utilities)/launch/imutf.launch">
+	</include-->
+
+	<node pkg="tf" type="static_transform_publisher" name="laser_to_base_tf" args="0 0 0 0 0 0 base_link laser 20" />
+
+</launch>

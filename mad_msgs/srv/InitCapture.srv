@@ -1,0 +1,5 @@
+string mode  # phot, video
+string file_format
+string media_root
+---
+bool success

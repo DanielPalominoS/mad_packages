@@ -1,0 +1,63 @@
+<!--
+-->
+
+<launch>
+	
+	<arg name="fcu_url" 		default="/dev/ttyS0:57600"/>
+	<arg name="debug"   		default="screen"/>
+	<arg name="name"   		default="mad"/>
+	<!-- RS config params -->
+	<arg name="camera_name"   		default="camera"/>
+	<arg name="enable_fisheye1"   	default="true"/>
+	<arg name="enable_fisheye2"   	default="true"/>
+
+	<!-- Frames -->
+
+	<!-- Sensors -->
+	<include file="$(find realsense2_camera)/launch/rs_t265.launch" >
+		<arg name="camera" value="$(arg camera_name)"/>
+		<arg name="enable_fisheye1" value="$(arg enable_fisheye1)"/>
+		<arg name="enable_fisheye2" value="$(arg enable_fisheye2)"/>
+	</include>
+
+	<!-- Monitors -->
+	<!-- sensors monitor -->
+	<include file="$(find mad_monitors)/launch/topic_monitor_sp.launch">
+		<arg name="debug" value="$(arg debug)"/>
+		<arg name="name" value="$(arg name)"/>
+		<arg name="module_name" value="RSt265 Sensor"/>
+		<arg name="source_tp" value="/camera/odom/sample"/>
+		<arg name="wd_freq_tp" value="0.1"/>
+		<arg name="stderr_tp" value="stderr"/>
+		<arg name="monitor_name" value="T265_monitor"/>
+	</include>
+	
+	<include file="$(find mad_monitors)/launch/state_monitor.launch">
+		<arg name="debug" value="$(arg debug)"/>
+		<arg name="name" value="$(arg name)"/>
+		<arg name="monitor_name" value="state_monitor"/>
+		<arg name="mavros_srv_name" value="mavros/cmd/land"/>
+		<arg name="stderr_tp" value="stderr"/>
+		<arg name="cmd_tp" value="mavros"/>
+	</include>
+
+	<!-- Adapters -->
+	
+	<include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch" />
+
+	<!-- Interfaces -->
+	<!--include file="$(find mavros)/launch/apm.launch">
+		<arg name="fcu_url" value="$(arg fcu_url)"/>
+	</include-->
+	
+	<!-- Tools -->
+	<!--include file="$(find mad_camera)/launch/camera.launch" /-->
+
+
+	<!--node pkg="drone_rviz" type="booster_rs.py" name="booster_node" output="$(arg debug)" /-->	
+
+	<!--node pkg="tf" type="static_transform_publisher" name="wtm_tf" output="$(arg debug)" args="0 0 0 0 0 0 world map 20" /-->
+
+	<node pkg="tf" type="static_transform_publisher" name="stm_tf" output="$(arg debug)" args="0 0 0 0 0 0 map camera_odom_frame 20" />
+
+</launch>

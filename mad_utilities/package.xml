@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <name>mad_utilities</name>
+  <version>1.10.0</version>
+  <description>The x ros package, support x and x</description>
+
+  <maintainer email="ros@mbpo.com">MBPO ROS Maintainer</maintainer>
+  <license>NOBSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rosconsole</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <run_depend>std_msgs</run_depend>
+<build_depend>std_msgs</build_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rosconsole</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+</package>

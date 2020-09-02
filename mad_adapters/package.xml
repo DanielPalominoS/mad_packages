@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>mad_adapters</name>
+  <version>1.0.0</version>
+  <description>The x package</description>
+  <maintainer email="me@millenium.com.co">me</maintainer>
+  <license>Copyright 2019 - MBPO All rights reserved.</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <run_depend>roscpp</run_depend>
+  <build_depend>std_msgs</build_depend>
+  <run_depend>std_msgs</run_depend>
+  <build_depend>mavros_msgs</build_depend>
+  <run_depend>mavros_msgs</run_depend>
+</package>

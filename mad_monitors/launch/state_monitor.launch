@@ -1,0 +1,21 @@
+<!--
+
+-->
+<launch>
+	
+	<arg name="debug" default="screen"/>
+	<arg name="name" default="mad"/>
+	<arg name="monitor_name" default="state_monitor"/>
+	<arg name="mavros_srv_name" default="mavros/cmd/land"/>
+	<arg name="stderr_tp" default="stderr"/>
+	<arg name="cmd_tp" default="mavros"/>
+
+	<group ns="$(arg name)">
+		<node pkg="mad_monitors" type="state_monitor.py" name="$(arg monitor_name)" output="$(arg debug)" respawn="true">
+			<param name="error_tp" value="$(arg stderr_tp)"/>
+			<param name="cmd_tp" value="$(arg cmd_tp)"/>
+			<param name="mavros_srv_name" value="$(arg mavros_srv_name)"/>
+		</node>
+	</group>
+
+</launch>

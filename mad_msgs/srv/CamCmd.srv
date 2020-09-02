@@ -1,0 +1,5 @@
+#caommand=mode:path
+string command
+string description
+---
+bool success

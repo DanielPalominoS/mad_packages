@@ -1,0 +1,23 @@
+<!--
+
+-->
+<launch>
+	
+	<arg name="debug" default="screen"/>
+	<arg name="name" default="mad"/>
+	<arg name="module_name" default="Generic Monitor"/>
+	<arg name="source_tp" default="generic_topic"/>
+	<arg name="wd_freq_tp" default="1"/>
+	<arg name="stderr_tp" default="stderr"/>
+	<arg name="monitor_name" default="generic_monitor"/>
+
+	<group ns="$(arg name)">
+		<node pkg="mad_monitors" type="topic_monitor_sp.py" name="$(arg monitor_name)" output="$(arg debug)" respawn="true">
+			<param name="module_name" value="$(arg module_name)"/>
+			<param name="source_tp" value="$(arg source_tp)"/>
+			<param name="wd_freq_tp" value="$(arg wd_freq_tp)"/>
+			<param name="stderr_tp" value="$(arg stderr_tp)"/>
+		</node>
+	</group>
+
+</launch>

@@ -3,13 +3,18 @@
 
 <launch>
 	
-	<arg name="fcu_url" 		default="/dev/ttyS0:57600"/>
+	<!--arg name="fcu_url" 		default="/dev/ttyS0:57600"/-->
+	<arg name="fcu_url" 		default="/dev/ttyUSB0:921600"/>
+	<arg name="gcs_url" 		default="udp//:14555@192.168.0.101:14550"/>
 	<arg name="debug"   		default="screen"/>
 	<arg name="name"   		default="mad"/>
 	<!-- RS config params -->
 	<arg name="camera_name"   		default="camera"/>
 	<arg name="enable_fisheye1"   	default="true"/>
 	<arg name="enable_fisheye2"   	default="true"/>
+
+	<arg name="apm"   	default="false"/>
+	<arg name="px4"   	default="true"/>
 
 	<!-- Frames -->
 
@@ -49,10 +54,14 @@
 	<!--include file="$(find mavros)/launch/apm.launch">
 		<arg name="fcu_url" value="$(arg fcu_url)"/>
 	</include-->
+	<include file="$(find mavros)/launch/px4.launch" if="$(arg px4)">
+		<arg name="fcu_url" value="$(arg fcu_url)"/>
+		<!--arg name="gcs_url" value="$(arg gcs_url)"/-->
+	</include>
 	
 	<!-- Tools -->
-	<!--include file="$(find mad_camera)/launch/camera.launch" /-->
-
+	<include file="$(find mad_camera)/launch/camera.launch" />
+	<include file="$(find mavros_offboard_control)/launch/mavros_ob_controller.launch" />
 
 	<!--node pkg="drone_rviz" type="booster_rs.py" name="booster_node" output="$(arg debug)" /-->	
 

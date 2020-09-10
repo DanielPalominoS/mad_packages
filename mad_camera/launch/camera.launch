@@ -4,22 +4,33 @@
 <launch>
 	
 	<arg name="debug"   default="screen"/>
+	<arg name="usb_cam_pkg"   default="false"/>
+	<arg name="uvc_cam_pkg"   default="true"/>
+	<arg name="cam_nd_v1"   default="false"/>
+	<arg name="cam_nd_v2"   default="true"/>
 
-	<include file="$(find mad_camera)/launch/usb_cam.launch" />
+	<include file="$(find mad_camera)/launch/usb_cam.launch" if="$(arg usb_cam_pkg)"/>
+	<include file="$(find mad_camera)/launch/uvc_cam.launch" if="$(arg uvc_cam_pkg)"/>
 	
-	<node pkg="mad_camera" type="camera_module.py" name="camera_node" output="$(arg debug)" >
+	<node pkg="mad_camera" type="camera_module.py" name="camera_node" output="$(arg debug)" if="$(arg cam_nd_v1)">
 		<param name="cmd_tp" value="camm_command"/>
 		<param name="feedback_tp" value="feedback"/>
 		<param name="image_tp" value="/usb_cam/image_raw"/>
 	</node>
 
-	<node pkg="mad_camera" type="capture_module.py" name="capture_node" output="$(arg debug)" >
+	<node pkg="mad_camera" type="capture_module.py" name="capture_node" output="$(arg debug)" if="$(arg cam_nd_v1)">
 		<param name="cmd_tp" value="capm_command"/>
 		<param name="cmdcm_tp" value="camm_command"/>
 		<param name="camm_feedback_tp" value="camm_feedback"/>
 		<param name="motcm_tp" value="motm_command"/>
 		<param name="motm_feedback_tp" value="mavros/mission/reached"/>
 	</node>	
+	<node pkg="mad_camera" type="camera_module_v2.py" name="camera_node" output="$(arg debug)" if="$(arg cam_nd_v2)">
+		<param name="cmdcm_tp" value="camm_command"/>
+		<param name="init_cm_tp" value="init_camm"/>
+		<param name="feedback_tp" value="feedback"/>
+		<param name="image_tp" value="/image_raw"/>
+	</node>
 	
 
 </launch>

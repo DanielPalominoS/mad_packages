@@ -1,0 +1,26 @@
+<launch>
+  <!--			   -->
+  <!-- UVC camera arguments-->
+  <!--			   -->
+  <arg name="width" default="1920" />
+  <arg name="height" default="1080" />
+  <arg name="fps" default="30" />
+  <arg name="frame" default="wide_stereo" />
+  <arg name="auto_focus" default="False" />
+  <arg name="focus_absolute" default="0" />
+  <!-- Other params-->
+  <arg name="device" default="/dev/video0" />
+  <arg name="camera_info_url" default="file://$(find uvc_camera)/example.yaml" />
+  <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera" output="screen">
+    <param name="width" type="int" value="$(arg width)" />
+    <param name="height" type="int" value="$(arg height)" />
+    <param name="fps" type="int" value="$(arg fps)" />
+    <param name="frame" type="string" value="$(arg frame)" />
+
+    <param name="auto_focus" type="bool" value="$(arg auto_focus)" />
+    <param name="focus_absolute" type="int" value="$(arg focus_absolute)" />
+    
+
+    <param name="device" type="string" value="$(arg device)" />
+  </node>
+</launch>

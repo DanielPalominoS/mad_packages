@@ -2,6 +2,7 @@
 -->
 
 <launch>
+	<arg name="wp_file" default="$(env HOME)/wayp_file/test3 (espiral).wp" />
 	
 	<!--arg name="fcu_url" 		default="/dev/ttyS0:57600"/-->
 	<arg name="fcu_url" 		default="/dev/ttyUSB0:921600"/>
@@ -61,8 +62,10 @@
 	
 	<!-- Tools -->
 	<include file="$(find mad_camera)/launch/camera.launch" />
-	<include file="$(find mavros_offboard_control)/launch/mavros_ob_controller.launch" />
-
+	<include file="$(find mavros_offboard_control)/launch/mavros_ob_controller.launch">
+		<arg name="wp_file" value="$(arg wp_file)"/>
+	</include>
+		
 	<!--node pkg="drone_rviz" type="booster_rs.py" name="booster_node" output="$(arg debug)" /-->	
 
 	<!--node pkg="tf" type="static_transform_publisher" name="wtm_tf" output="$(arg debug)" args="0 0 0 0 0 0 world map 20" /-->
